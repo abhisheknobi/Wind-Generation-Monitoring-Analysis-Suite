@@ -1,0 +1,23 @@
+{
+  "name": "wind-generation-monitoring-analysis-suite",
+  "version": "1.0.0",
+  "description": "A full-stack application for monitoring and analyzing UK wind power generation forecasts",
+  "private": true,
+  "scripts": {
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "install:python": "cd python-analytics && pip install -r requirements.txt",
+    "start:server": "cd server && npm start",
+    "start:client": "cd client && npm start",
+    "start:python": "cd python-analytics && python app.py",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm start",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build:client": "cd client && npm run build"
+  },
+  "keywords": ["wind", "energy", "forecast", "monitoring", "analysis"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

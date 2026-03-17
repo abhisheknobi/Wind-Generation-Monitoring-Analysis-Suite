@@ -1,0 +1,188 @@
+.control-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  align-items: flex-end;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.control-section {
+  flex: 1;
+  min-width: 200px;
+}
+
+.control-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-sm);
+}
+
+.date-inputs {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.input-group {
+  flex: 1;
+  min-width: 180px;
+}
+
+.input-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-xs);
+}
+
+.date-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.date-input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Chrome date input icon color fix */
+.date-input::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  cursor: pointer;
+}
+
+/* ─── SLIDER ───────────────────────────────── */
+.horizon-value {
+  color: var(--accent-blue);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.horizon-slider {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(to right, var(--accent-blue), var(--accent-green));
+  border-radius: 3px;
+  outline: none;
+  margin: var(--spacing-sm) 0;
+  cursor: pointer;
+}
+
+.horizon-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  border: 3px solid var(--accent-blue);
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.15s;
+}
+
+.horizon-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.horizon-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  border: 3px solid var(--accent-blue);
+  cursor: pointer;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* ─── BUTTON ───────────────────────────────── */
+.control-actions {
+  display: flex;
+  align-items: flex-end;
+  flex: 0;
+  min-width: auto;
+}
+
+.fetch-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--accent-blue), #2563eb);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.fetch-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.fetch-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.fetch-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+/* ─── RESPONSIVE ───────────────────────────── */
+@media (max-width: 768px) {
+  .control-panel {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .date-inputs {
+    flex-direction: column;
+  }
+
+  .control-actions {
+    width: 100%;
+  }
+
+  .fetch-button {
+    width: 100%;
+    justify-content: center;
+  }
+}

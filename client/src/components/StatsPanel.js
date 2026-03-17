@@ -9,9 +9,10 @@
  *    {stats && <div>...</div>} → only renders if stats exists.
  *    This prevents errors when data hasn't loaded yet.
  * 
- * 2. ARRAY.MAP() FOR LISTS:
- *    React renders lists by mapping an array of data to an array of components.
- *    Each item needs a unique `key` prop so React can efficiently update the DOM.
+ * 2. DYNAMIC TAILWIND CLASSES:
+ *    We can't do `text-${color}-500` dynamically — Tailwind purges classes
+ *    it doesn't see at build time. Instead we use a colorMap object that
+ *    maps color names to FULL class strings Tailwind can detect.
  * 
  * 3. METRIC EXPLANATIONS (for learning):
  *    - MAE: "The forecast is off by ___ MW on average"
@@ -21,14 +22,41 @@
  */
 
 import React from 'react';
-import './StatsPanel.css';
+
+// Tailwind requires full class strings at build time — no dynamic interpolation
+const colorMap = {
+  blue: {
+    border: 'border-l-blue-500',
+    label: 'text-blue-400',
+    bg: 'bg-blue-500/5',
+  },
+  purple: {
+    border: 'border-l-purple-500',
+    label: 'text-purple-400',
+    bg: 'bg-purple-500/5',
+  },
+  yellow: {
+    border: 'border-l-yellow-500',
+    label: 'text-yellow-400',
+    bg: 'bg-yellow-500/5',
+  },
+  red: {
+    border: 'border-l-red-500',
+    label: 'text-red-400',
+    bg: 'bg-red-500/5',
+  },
+  green: {
+    border: 'border-l-green-500',
+    label: 'text-green-400',
+    bg: 'bg-green-500/5',
+  },
+};
 
 function StatsPanel({ stats }) {
   if (!stats || stats.count === 0) {
     return null;
   }
 
-  // Define the metric cards we want to display
   const metrics = [
     {
       label: 'MAE',
@@ -75,20 +103,31 @@ function StatsPanel({ stats }) {
   ];
 
   return (
-    <div className="stats-panel">
-      <h3 className="stats-title">Forecast Accuracy Metrics</h3>
-      <div className="stats-grid">
-        {metrics.map((metric) => (
-          <div
-            key={metric.label}
-            className={`stat-card stat-card--${metric.color}`}
-            title={metric.tooltip}
-          >
-            <div className="stat-label">{metric.label}</div>
-            <div className="stat-value">{metric.value}</div>
-            <div className="stat-description">{metric.description}</div>
-          </div>
-        ))}
+    <div className="animate-fade-in">
+      <h3 className="text-sm font-semibold text-dark-400 uppercase tracking-wider mb-3">
+        Forecast Accuracy Metrics
+      </h3>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        {metrics.map((metric) => {
+          const colors = colorMap[metric.color] || colorMap.blue;
+          return (
+            <div
+              key={metric.label}
+              className={`${colors.bg} border border-dark-700 ${colors.border} border-l-[3px] rounded-xl p-3 md:p-4 transition-colors hover:bg-dark-700/50 cursor-default`}
+              title={metric.tooltip}
+            >
+              <div className={`text-[0.7rem] font-semibold uppercase tracking-wider ${colors.label} mb-1`}>
+                {metric.label}
+              </div>
+              <div className="text-lg md:text-xl font-bold text-dark-100 leading-tight">
+                {metric.value}
+              </div>
+              <div className="text-[0.7rem] text-dark-500 mt-1">
+                {metric.description}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

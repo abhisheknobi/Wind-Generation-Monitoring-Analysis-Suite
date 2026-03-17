@@ -1,130 +1,73 @@
 /**
- * GLOBAL STYLES
- * ─────────────
- * These CSS variables and base styles apply to the entire application.
+ * TAILWIND CSS SETUP
+ * ──────────────────
+ * These three directives import Tailwind's layers:
  * 
- * CSS CUSTOM PROPERTIES (variables):
- * Defined with --name and used with var(--name).
- * Makes it easy to change colors/sizes in one place.
+ * @tailwind base    → CSS reset + base styles (like normalize.css)
+ * @tailwind components → Component classes (e.g., .container)
+ * @tailwind utilities  → All the utility classes (text-blue-500, flex, p-4, etc.)
  * 
- * We use a dark theme because energy monitoring dashboards
- * are typically viewed for long periods — dark themes reduce eye strain.
+ * HOW TAILWIND WORKS:
+ * Instead of writing CSS in separate files, you apply utility classes
+ * directly in your JSX:
+ *   Before: className="header-title"  + .header-title { font-size: 1.4rem; color: white; }
+ *   After:  className="text-xl font-bold text-white"
+ * 
+ * Benefits:
+ * 1. No context-switching between JS and CSS files
+ * 2. No naming conflicts (no more BEM, no more "what do I call this class?")
+ * 3. Dead code elimination — unused styles are automatically removed in production
+ * 4. Responsive design built-in: "md:text-lg" means "text-lg on medium screens+"
  */
 
-/* ─── CSS VARIABLES ─────────────────────────────── */
-:root {
-  /* Colors */
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-card: #1e293b;
-  --bg-card-hover: #334155;
-  --border-color: #334155;
-  
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  
-  --accent-blue: #3b82f6;
-  --accent-green: #22c55e;
-  --accent-red: #ef4444;
-  --accent-yellow: #eab308;
-  --accent-purple: #a855f7;
-  
-  /* Chart colors */
-  --chart-actual: #3b82f6;
-  --chart-forecast: #22c55e;
-  
-  /* Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  
-  /* Border radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.4);
-  
-  /* Typography */
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CUSTOM BASE STYLES ────────────────────────── */
+@layer base {
+  body {
+    @apply font-sans bg-dark-900 text-dark-100 antialiased;
+    min-height: 100vh;
+  }
+
+  /* Custom scrollbar for dark theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-dark-700 rounded;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-dark-500;
+  }
 }
 
-/* ─── BASE RESET ────────────────────────────────── */
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ─── CUSTOM SLIDER STYLES ──────────────────────── */
+/* Tailwind doesn't have built-in range slider styling, so we add custom CSS */
+@layer components {
+  .slider-custom {
+    @apply w-full h-1.5 rounded-full appearance-none cursor-pointer;
+    background: linear-gradient(to right, #3b82f6, #22c55e);
+  }
+  .slider-custom::-webkit-slider-thumb {
+    @apply appearance-none w-5 h-5 rounded-full bg-white border-[3px] border-primary-500 cursor-pointer shadow-md;
+    transition: transform 0.15s;
+  }
+  .slider-custom::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+  .slider-custom::-moz-range-thumb {
+    @apply w-5 h-5 rounded-full bg-white border-[3px] border-primary-500 cursor-pointer;
+  }
 
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: var(--font-family);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
-}
-
-/* ─── SCROLLBAR STYLING ─────────────────────────── */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
-}
-
-/* ─── UTILITY CLASSES ───────────────────────────── */
-.loading-spinner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-xl);
-}
-
-.loading-spinner::after {
-  content: '';
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--border-color);
-  border-top-color: var(--accent-blue);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* ─── ANIMATIONS ────────────────────────────────── */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(-20px); }
-  to { opacity: 1; transform: translateX(0); }
+  /* Chrome date input icon tweak for dark theme */
+  .dark-date-input::-webkit-calendar-picker-indicator {
+    filter: invert(0.7);
+    cursor: pointer;
+  }
 }

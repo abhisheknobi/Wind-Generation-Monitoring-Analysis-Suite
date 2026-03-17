@@ -3,22 +3,23 @@
  * ────────────────────
  * This is the top-level React component. It renders the Dashboard.
  * 
- * In a larger app, this would contain React Router for navigation.
- * For our single-page dashboard, it just wraps the Dashboard component.
- * 
  * REACT COMPONENT BASICS:
  * - A component is a function that returns JSX (HTML-like syntax)
  * - Components can have STATE (data that changes) and PROPS (data passed in)
  * - When state changes, React automatically re-renders the component
+ * 
+ * TAILWIND NOTE:
+ * Notice there's no `import './App.css'` anymore. With Tailwind, we apply
+ * styles directly as className strings. The only CSS import is in index.js
+ * (index.css with the @tailwind directives).
  */
 
 import React from 'react';
 import Dashboard from './components/Dashboard';
-import './App.css';
 
 function App() {
   return (
-    <div className="app">
+    <div className="min-h-screen bg-dark-900">
       <Dashboard />
     </div>
   );

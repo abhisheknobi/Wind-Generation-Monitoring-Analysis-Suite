@@ -23,8 +23,9 @@ import axios from 'axios';
 
 // Base URL for our Node.js API
 // In development: React runs on :3000, API on :5000
-// The "proxy" in package.json forwards /api/* requests to :5000
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+// Vite's dev server proxies /api/* requests to :5000 (see vite.config.js)
+// Vite uses import.meta.env instead of process.env for env variables
+const API_BASE = import.meta.env.VITE_API_URL || '';
 
 // Create a configured axios instance
 const api = axios.create({

@@ -7,13 +7,13 @@
     <meta name="description" content="Wind Generation Monitoring & Analysis Suite - Monitor UK wind power generation forecasts" />
     <title>Wind Generation Monitor</title>
     <!--
-      WHAT IS THIS FILE?
-      This is the single HTML file that React mounts into.
-      React is a "Single Page Application" (SPA) framework - meaning
-      the entire app runs inside ONE HTML page. JavaScript dynamically
-      updates what you see without loading new pages.
+      VITE vs CRA DIFFERENCE:
+      In Vite, index.html lives at the project ROOT (not public/).
+      Vite uses this as the entry point and injects the JS module via
+      the <script type="module"> tag below.
       
-      The <div id="root"> below is where React injects all its components.
+      CRA used webpack which injected scripts automatically.
+      Vite requires you to explicitly include the entry script.
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,5 +22,7 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- Vite requires explicit script tag (CRA injected this automatically) -->
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

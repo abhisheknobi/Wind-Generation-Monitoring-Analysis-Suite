@@ -21,8 +21,14 @@ are needed. The frontend never talks to this service directly.
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from services.analysis import compute_error_analysis, compute_reliability_analysis
 import os
+import sys
+
+# Ensure the current directory is in Python's module search path
+# This is needed for embeddable Python distributions
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from services.analysis import compute_error_analysis, compute_reliability_analysis
 
 # Create Flask app
 app = Flask(__name__)

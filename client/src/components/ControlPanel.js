@@ -50,6 +50,7 @@ function ControlPanel({
               type="datetime-local"
               className="dark-date-input w-full px-3 py-2.5 bg-dark-900 border border-dark-700 rounded-md text-dark-100 font-sans text-sm outline-none transition-all focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
               value={startDate}
+              min="2025-01-01T00:00"
               onChange={(e) => onStartDateChange(e.target.value)}
             />
           </div>
@@ -62,6 +63,7 @@ function ControlPanel({
               type="datetime-local"
               className="dark-date-input w-full px-3 py-2.5 bg-dark-900 border border-dark-700 rounded-md text-dark-100 font-sans text-sm outline-none transition-all focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20"
               value={endDate}
+              min="2025-01-01T00:00"
               onChange={(e) => onEndDateChange(e.target.value)}
             />
           </div>
